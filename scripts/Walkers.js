@@ -1,8 +1,9 @@
-import { getCities, getWalkerCities, getWalkers } from "./database.js"
+import { getCities, getPets, getWalkerCities, getWalkers } from "./database.js"
 
 const walkerCities = getWalkerCities()
 const cities = getCities()
 const walkers = getWalkers()
+const pets = getPets()
 
 
 export const findCities = (walker) => {
@@ -19,16 +20,13 @@ export const findCities = (walker) => {
 
 export const assignCityNames = (assignments) => {
     let citiesString = null
-    let citiesArray = []
 
     for (const assignment of assignments) {
         for (const city of cities) {
             if (city.id === assignment.cityId && !citiesString) {
-                citiesArray.push(city.name)
                 citiesString = ` ${city.name}`
             }
             else if (city.id === assignment.cityId && citiesString != null) {
-                citiesArray.push(city.name)
                 citiesString = `${citiesString} and ${city.name}`
             }
 
@@ -54,6 +52,21 @@ const walkerCityAlert = (clickEvent) => {
 }
 
 document.addEventListener("click", (clickEvent) => walkerCityAlert(clickEvent))
+
+const petWalkerAlert = (clickEvent) => {
+    const itemClicked = clickEvent.target
+    if (itemClicked.id.startsWith("pet")) {
+        const [,petId] = itemClicked.id.split("--")
+        for (const pet of pets) {
+            const walker = walkers.find(walker => walker.id === pet.walkerId)
+            if (pet.id === parseInt(petId)) {
+                window.alert(`${pet.name} is walked by ${walker.name}`)
+            }
+        }
+    }
+}
+
+document.addEventListener("click", (clickEvent) => petWalkerAlert(clickEvent))
 
 
 export const Walkers = () => {
