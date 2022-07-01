@@ -5,7 +5,7 @@ const cities = getCities()
 const walkers = getWalkers()
 
 
-const findCities = (walker) => {
+export const findCities = (walker) => {
     let cityAssignments = []
 
     for (const city of walkerCities) {
@@ -17,7 +17,7 @@ const findCities = (walker) => {
     return cityAssignments
 }
 
-const assignCityNames = (assignments) => {
+export const assignCityNames = (assignments) => {
     let citiesString = null
     let citiesArray = []
 
@@ -46,8 +46,8 @@ const walkerCityAlert = (clickEvent) => {
         for (const walker of walkers) {
             if (walker.id === parseInt(walkerId)) {
                 const assignments =  findCities(walker)
-                const cities = assignCityNames(assignments)
-                window.alert(`${walker.name} services${cities}`)
+                const assignedCities = assignCityNames(assignments)
+                window.alert(`${walker.name} services${assignedCities}`)
             }
         }
     }
